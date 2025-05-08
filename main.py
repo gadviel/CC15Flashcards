@@ -247,8 +247,8 @@ if __name__ == '__main__':
     root.geometry('500x400')
 
     # Apply styling to the GUI elements
-    style = Style(theme='superhero')
-    style.configure('TLabel', font=('TkDefaultFont', 18))
+    style = Style(theme='darkly')
+    style.configure('TLabel', font=('TkHeadingFont', 18))
     style.configure('TButton', font=('TkDefaultFont', 16))
 
     # Set up variables for storing user input
@@ -265,17 +265,17 @@ if __name__ == '__main__':
     notebook.add(create_set_frame, text='Create Set')
 
     # Label and Entry widgets for entering set name, word and definition
-    ttk.Label(create_set_frame, text='Set Name:').pack(padx=5, pady=5)
+    ttk.Label(create_set_frame, text='Set Name').pack(padx=5, pady=5)
     ttk.Entry(create_set_frame, textvariable=set_name_var, width=30).pack(padx=5, pady=5)
 
-    ttk.Label(create_set_frame, text='Word:').pack(padx=5, pady=5)
+    ttk.Label(create_set_frame, text='Question').pack(padx=5, pady=5)
     ttk.Entry(create_set_frame, textvariable=word_var, width=30).pack(padx=5, pady=5)
 
-    ttk.Label(create_set_frame, text='Definition:').pack(padx=5, pady=5)
+    ttk.Label(create_set_frame, text='Definition').pack(padx=5, pady=5)
     ttk.Entry(create_set_frame, textvariable=definition_var, width=30).pack(padx=5, pady=5)
 
     # Button to add a word to the set 
-    ttk.Button(create_set_frame, text='Add Word', command=add_word).pack(padx=5, pady=10)
+    ttk.Button(create_set_frame, text='Add Question', command=add_word).pack(padx=5, pady=10)
     
     # Button to save the set 
     ttk.Button(create_set_frame, text='Save Set', command=create_set).pack(padx=5, pady=10)
@@ -303,7 +303,7 @@ if __name__ == '__main__':
     current_tabs = []
 
     # Label to display the word on flashcards
-    word_label = ttk.Label(flashcards_frame, text='', font=('TkDefaultFont', 24))
+    word_label = ttk.Label(flashcards_frame, text='', font=('TkHeadingFont', 24))
     word_label.pack(padx=5, pady=40)
 
     # Label to display the definition on flashcards
