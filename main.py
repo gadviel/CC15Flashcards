@@ -243,7 +243,7 @@ if __name__ == '__main__':
 
     # Create the main GUI window
     root = tk.Tk()
-    root.title('Flashcards App')
+    root.title('FlashMe!')
     root.geometry('500x400')
 
     # Apply styling to the GUI elements
