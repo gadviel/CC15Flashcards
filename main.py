@@ -243,6 +243,9 @@ if __name__ == '__main__':
 
     # Create the main GUI window
     root = tk.Tk()
+    from tkinter import PhotoImage
+    icon = PhotoImage(file='D:\Downloads\CC15Flashcards\FlashMe.png')
+    root.iconphoto(True, icon)
     root.title('FlashMe!')
     root.geometry('500x400')
 
