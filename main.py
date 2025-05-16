@@ -279,10 +279,10 @@ if __name__ == '__main__':
     ttk.Entry(create_set_frame, textvariable=definition_var, width=30).pack(padx=5, pady=5)
 
     # Button to add a word to the set 
-    ttk.Button(create_set_frame, text='Add Question', command=add_word).pack(padx=5, pady=10)
+    ttk.Button(create_set_frame, text='Add Question', command=add_word, bootstyle='light').pack(padx=5, pady=10)
     
     # Button to save the set 
-    ttk.Button(create_set_frame, text='Save Set', command=create_set).pack(padx=5, pady=10)
+    ttk.Button(create_set_frame, text='Save Set', command=create_set, bootstyle='light').pack(padx=5, pady=10)
 
     # Create the "Select Set" tab and its content
     select_set_frame = ttk.Frame(notebook)
@@ -293,10 +293,10 @@ if __name__ == '__main__':
     sets_combobox.pack(padx=5, pady=40)
 
     # Button to select a set 
-    ttk.Button(select_set_frame, text='Select Set', command=select_set).pack(padx=5, pady=5)
+    ttk.Button(select_set_frame, text='Select Set', command=select_set, bootstyle='light').pack(padx=5, pady=5)
 
     # Button to delete a set 
-    ttk.Button(select_set_frame, text='Delete Set', command=delete_selected_set).pack(padx=5, pady=5)
+    ttk.Button(select_set_frame, text='Delete Set', command=delete_selected_set, bootstyle='light').pack(padx=5, pady=5)
 
     # Create the "Learn mode" tab and its content
     flashcards_frame = ttk.Frame(notebook)
@@ -315,13 +315,13 @@ if __name__ == '__main__':
     definition_label.pack(padx=5, pady=5)
 
     # Button to flip the flashcard 
-    ttk.Button(flashcards_frame, text='Flip', command=flip_card).pack(side='left', padx=5, pady=5)
+    ttk.Button(flashcards_frame, text='Flip', command=flip_card, bootstyle='light').pack(side='left', padx=5, pady=5)
 
     # Button to view the next flashcard 
-    ttk.Button(flashcards_frame, text='Next', command=next_card).pack(side='right', padx=5, pady=5)
+    ttk.Button(flashcards_frame, text='Next', command=next_card, bootstyle='light').pack(side='right', padx=5, pady=5)
 
     # Button to view the previous flashcard 
-    ttk.Button(flashcards_frame, text='Previous', command=prev_card).pack(side='right', padx=5, pady=5)
+    ttk.Button(flashcards_frame, text='Previous', command=prev_card, bootstyle='light').pack(side='right', padx=5, pady=5)
 
     populate_sets_combobox()
     from PIL import Image, ImageTk
