@@ -247,8 +247,9 @@ if __name__ == '__main__':
     icon = PhotoImage(file='D:\Downloads\CC15Flashcards\FlashMe.png')
     root.iconphoto(True, icon)
     root.title('FlashMe!')
-    root.geometry('500x400')
-
+    root.geometry('500x500')
+    root.resizable(False, False)
+    
     # Apply styling to the GUI elements
     style = Style(theme='darkly')
     style.configure('TLabel', font=('TkHeadingFont', 18))
@@ -323,5 +324,16 @@ if __name__ == '__main__':
     ttk.Button(flashcards_frame, text='Previous', command=prev_card).pack(side='right', padx=5, pady=5)
 
     populate_sets_combobox()
+    from PIL import Image, ImageTk
+
+    # Open and resize the image
+    original_image = Image.open('D:\Downloads\CC15Flashcards\FlashMe2.png')
+    resized_image = original_image.resize((75, 75))  # Resize to fit at bottom
+    footer_image = ImageTk.PhotoImage(resized_image)
+
+    # Create and pack a label for the image
+    footer_label = ttk.Label(root, image=footer_image)
+    footer_label.image = footer_image  # Keep a reference to avoid garbage collection
+    footer_label.pack(side='bottom', pady=10)
 
     root.mainloop()
