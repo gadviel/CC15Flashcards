@@ -308,17 +308,17 @@ if __name__ == '__main__':
     ttk.Label(create_set_frame, text='Definition').pack(padx=5, pady=5)
     ttk.Entry(create_set_frame, textvariable=definition_var, width=30).pack(padx=5, pady=5)
 
-    ttk.Button(create_set_frame, text='Add Question', command=add_word, bootstyle='light-outline').pack(padx=5, pady=10)
+    ttk.Button(create_set_frame, text='Add Question', command=add_word, bootstyle='light').pack(padx=5, pady=10)
 
     ttk.Button(create_set_frame, text='Save Set', command=create_set, bootstyle='light-outline').pack(padx=5, pady=10)
 
     select_set_frame = ttk.Frame(notebook, padding="10") 
     notebook.add(select_set_frame, text="Select Set")
 
-    sets_combobox = ttk.Combobox(select_set_frame, state='readonly', width=27, bootstyle='light') 
+    sets_combobox = ttk.Combobox(select_set_frame, state='readonly', width=27) 
     sets_combobox.pack(padx=5, pady=20) 
 
-    ttk.Button(select_set_frame, text='Select Set', command=select_set, bootstyle='light-outline').pack(padx=5, pady=5)
+    ttk.Button(select_set_frame, text='Select Set', command=select_set, bootstyle='light').pack(padx=5, pady=5)
 
     ttk.Button(select_set_frame, text='Delete Set', command=delete_selected_set, bootstyle='light-outline').pack(padx=5, pady=5)
 
