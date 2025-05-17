@@ -3,12 +3,10 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from ttkbootstrap import Style
-<<<<<<< HEAD
 from PIL import Image, ImageTk
-=======
 import random # Import the random module for shuffling
 from PIL import Image, ImageTk # Import Image and ImageTk from Pillow
->>>>>>> f92029d6e7bd4e5fc1ef215d2886fe30e9f7fae6
+
 
 # Create database tables if they don't exist
 def create_tables(conn):
@@ -328,13 +326,10 @@ if __name__ == '__main__':
     ttk.Button(select_set_frame, text='Delete Set', command=delete_selected_set, bootstyle='light').pack(padx=5, pady=5)
 
     # Create the "Learn mode" tab and its content
-<<<<<<< HEAD
-    flashcards_frame = ttk.Frame(notebook)
-    notebook.add(flashcards_frame, text='Study Mode')
-=======
+
     flashcards_frame = ttk.Frame(notebook, padding="10") # Added padding
-    notebook.add(flashcards_frame, text='Learn Mode')
->>>>>>> f92029d6e7bd4e5fc1ef215d2886fe30e9f7fae6
+    notebook.add(flashcards_frame, text='Study Mode')
+
 
     # Initialize variables for tracking card index and current cards
     card_index = 0
@@ -371,16 +366,15 @@ if __name__ == '__main__':
 
 
     populate_sets_combobox()
-<<<<<<< HEAD
+
     
-=======
->>>>>>> f92029d6e7bd4e5fc1ef215d2886fe30e9f7fae6
+
 
     # Added error handling for the footer image loading
     try:
         # Open and resize the image
         original_image = Image.open('D:\Downloads\CC15Flashcards\FlashMe2.png')
-        resized_image = original_image.resize((75, 75))  # Resize to fit at bottom
+        resized_image = original_image.resize((74, 75))  # Resize to fit at bottom
         footer_image = ImageTk.PhotoImage(resized_image)
 
         # Create and pack a label for the image
