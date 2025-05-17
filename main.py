@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from ttkbootstrap import Style
+from PIL import Image, ImageTk
 
 # Create database tables if they don't exist
 def create_tables(conn):
@@ -300,7 +301,7 @@ if __name__ == '__main__':
 
     # Create the "Learn mode" tab and its content
     flashcards_frame = ttk.Frame(notebook)
-    notebook.add(flashcards_frame, text='Learn Mode')
+    notebook.add(flashcards_frame, text='Study Mode')
 
     # Initialize variables for tracking card index and current cards
     card_index = 0
@@ -324,7 +325,7 @@ if __name__ == '__main__':
     ttk.Button(flashcards_frame, text='Previous', command=prev_card, bootstyle='light').pack(side='right', padx=5, pady=5)
 
     populate_sets_combobox()
-    from PIL import Image, ImageTk
+    
 
     # Open and resize the image
     original_image = Image.open('D:\Downloads\CC15Flashcards\FlashMe2.png')
