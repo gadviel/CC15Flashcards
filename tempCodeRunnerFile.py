@@ -1,1 +1,1 @@
-<<
+root.geometry('500x550') # Increased height slightly to accommodate the card box and footer

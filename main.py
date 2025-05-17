@@ -4,15 +4,15 @@ from tkinter import ttk
 from tkinter import messagebox
 from ttkbootstrap import Style
 from PIL import Image, ImageTk
-import random # Import the random module for shuffling
-from PIL import Image, ImageTk # Import Image and ImageTk from Pillow
+from tkinter import PhotoImage
+import random 
+from PIL import Image, ImageTk 
 
 
-# Create database tables if they don't exist
+
 def create_tables(conn):
     cursor = conn.cursor()
 
-    # Create flashcard_sets table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS flashcard_sets (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -20,7 +20,6 @@ def create_tables(conn):
         )
     ''')
 
-    # Create flashcards table with foreign key reference to flashcard_sets
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS flashcards (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,11 +30,11 @@ def create_tables(conn):
         )
     ''')
 
-# Add a new flashcard set to the database
+# Add flashcard 
 def add_set(conn, name):
     cursor = conn.cursor()
 
-    # Insert the set name into flashcard_sets table
+    
     cursor.execute('''
         INSERT INTO flashcard_sets (name)
         VALUES (?)
@@ -46,37 +45,37 @@ def add_set(conn, name):
 
     return set_id
 
-# Function to add a flashcard to the database
+
 def add_card(conn, set_id, word, definition):
     cursor = conn.cursor()
 
-    # Execute SQL query to insert a new flashcard into the database
+    
     cursor.execute('''
         INSERT INTO flashcards (set_id, word, definition)
         VALUES (?, ?, ?)
     ''', (set_id, word, definition))
 
-    # Get the ID of the newly inserted card
+    
     card_id = cursor.lastrowid
     conn.commit()
 
     return card_id
 
-# Function to retrieve all flashcard sets from the database
+# Retrieve flashcards from database
 def get_sets(conn):
     cursor = conn.cursor()
 
-    # Execite SQL query to fetch all flashcard sets
+    
     cursor.execute('''
         SELECT id, name FROM flashcard_sets
     ''')
 
     rows = cursor.fetchall()
-    sets = {row[1]: row[0] for row in rows} # Create a dictionary of sets (name: id)
+    sets = {row[1]: row[0] for row in rows} 
 
     return sets
 
-# Function to retrieve all flashcards of a specific set
+
 def get_cards(conn, set_id):
     cursor = conn.cursor()
 
@@ -86,15 +85,15 @@ def get_cards(conn, set_id):
     ''', (set_id,))
 
     rows = cursor.fetchall()
-    cards = [(row[0], row[1]) for row in rows] # Create a list of cards (word, definition)
+    cards = [(row[0], row[1]) for row in rows] 
 
     return cards
 
-# Function to delete a flashcard set from the database
+# Delete a flashcard set
 def delete_set(conn, set_id):
     cursor = conn.cursor()
 
-    # Execute SQL query to delete a flashcard set
+   
     cursor.execute('''
         DELETE FROM flashcard_sets
         WHERE id = ?
@@ -105,12 +104,12 @@ def delete_set(conn, set_id):
     clear_flashcard_display()
     populate_sets_combobox()
 
-    # Clear the current_cards list and reset card_index
+    
     global current_cards, card_index
     current_cards = []
     card_index = 0
 
-# Function to create a new flashcard set
+# Create flashcards
 def create_set():
     set_name = set_name_var.get()
     if set_name:
@@ -145,7 +144,7 @@ def add_word():
 def populate_sets_combobox():
     sets_combobox['values'] = tuple(get_sets(conn).keys())
 
-# Function to delete a selected flashcard set
+# Delete flashcards
 def delete_selected_set():
     set_name = sets_combobox.get()
 
@@ -169,13 +168,13 @@ def select_set():
 
         if cards:
             display_flashcards(cards)
-            # Automatically shuffle when a new set is selected
-            shuffle_cards()
+            
+            
         else:
             word_label.config(text="No cards in this set")
             definition_label.config(text='')
     else:
-        # Clear the current cards list and reset card index
+        
         global current_cards, card_index
         current_cards = []
         card_index = 0
@@ -188,7 +187,7 @@ def display_flashcards(cards):
     card_index = 0
     current_cards = cards
 
-    # Clear the display
+   
     if not cards:
         clear_flashcard_display()
     else:
@@ -200,7 +199,7 @@ def clear_flashcard_display():
     word_label.config(text='')
     definition_label.config(text='')
 
-# Function to display the current flashcards word
+#  Display the current flashcards word
 def show_card():
     global card_index
     global current_cards
@@ -215,7 +214,7 @@ def show_card():
     else:
         clear_flashcard_display()
 
-# Function to flip the current card and display its definition
+# 'Flip' the card
 def flip_card():
     global card_index
     global current_cards
@@ -228,7 +227,7 @@ def flip_card():
             definition_label.config(text='')
 
 
-# Function to move to the next card
+# Move to the next card
 def next_card():
     global card_index
     global current_cards
@@ -237,7 +236,7 @@ def next_card():
         card_index = min(card_index + 1, len(current_cards) -1)
         show_card()
 
-# Function to move to the previous card
+# Move to the previous card
 def prev_card():
     global card_index
     global current_cards
@@ -246,7 +245,7 @@ def prev_card():
         card_index = max(card_index - 1, 0)
         show_card()
 
-# Function to shuffle the current flashcards
+# Shuffle flashcards
 def shuffle_cards():
     global current_cards, card_index
     if current_cards:
@@ -265,8 +264,7 @@ if __name__ == '__main__':
 
     # Create the main GUI window
     root = tk.Tk()
-    from tkinter import PhotoImage
-    # Ensure the image file exists at this path or use a relative path
+    
     try:
         icon = PhotoImage(file='D:\Downloads\CC15Flashcards\FlashMe.png')
         root.iconphoto(True, icon)
@@ -274,28 +272,33 @@ if __name__ == '__main__':
         print("Warning: Icon file not found at D:\Downloads\CC15Flashcards\FlashMe.png")
 
     root.title('FlashMe!')
-    root.geometry('500x550') # Increased height slightly to accommodate the card box and footer
+    window_width = 500
+    window_height = 550
+
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+
+    x = int((screen_width / 2) - (window_width / 2))
+    y = int((screen_height / 2) - (window_height / 2))
+
+    root.geometry(f'{window_width}x{window_height}+{x}+{y}')
+
     root.resizable(False, False)
 
-    # Apply styling to the GUI elements
     style = Style(theme='darkly')
     style.configure('TLabel', font=('TkHeadingFont', 18))
     style.configure('TButton', font=('TkDefaultFont', 16))
 
-    # Set up variables for storing user input
     set_name_var = tk.StringVar()
     word_var = tk.StringVar()
     definition_var = tk.StringVar()
 
-    # Create a notebook widget to manage tabs
     notebook = ttk.Notebook(root)
-    notebook.pack(fill='both', expand=True, padx=10, pady=10) # Added padding
+    notebook.pack(fill='both', expand=True, padx=10, pady=10) 
 
-    # Create the "Create Set" tab and its content
-    create_set_frame = ttk.Frame(notebook, padding="10") # Added padding
+    create_set_frame = ttk.Frame(notebook, padding="10") 
     notebook.add(create_set_frame, text='Create Set')
 
-    # Label and Entry widgets for entering set name, word and definition
     ttk.Label(create_set_frame, text='Set Name').pack(padx=5, pady=5)
     ttk.Entry(create_set_frame, textvariable=set_name_var, width=30).pack(padx=5, pady=5)
 
@@ -305,86 +308,65 @@ if __name__ == '__main__':
     ttk.Label(create_set_frame, text='Definition').pack(padx=5, pady=5)
     ttk.Entry(create_set_frame, textvariable=definition_var, width=30).pack(padx=5, pady=5)
 
-    # Button to add a word to the set
-    ttk.Button(create_set_frame, text='Add Question', command=add_word, bootstyle='light').pack(padx=5, pady=10)
+    ttk.Button(create_set_frame, text='Add Question', command=add_word, bootstyle='light-outline').pack(padx=5, pady=10)
 
-    # Button to save the set
-    ttk.Button(create_set_frame, text='Save Set', command=create_set, bootstyle='light').pack(padx=5, pady=10)
+    ttk.Button(create_set_frame, text='Save Set', command=create_set, bootstyle='light-outline').pack(padx=5, pady=10)
 
-    # Create the "Select Set" tab and its content
-    select_set_frame = ttk.Frame(notebook, padding="10") # Added padding
+    select_set_frame = ttk.Frame(notebook, padding="10") 
     notebook.add(select_set_frame, text="Select Set")
 
-    # Combobox widget for selecting existing flashcard sets
-    sets_combobox = ttk.Combobox(select_set_frame, state='readonly', width=27) # Adjusted width
-    sets_combobox.pack(padx=5, pady=20) # Adjusted padding
+    sets_combobox = ttk.Combobox(select_set_frame, state='readonly', width=27, bootstyle='light') 
+    sets_combobox.pack(padx=5, pady=20) 
 
-    # Button to select a set
-    ttk.Button(select_set_frame, text='Select Set', command=select_set, bootstyle='light').pack(padx=5, pady=5)
+    ttk.Button(select_set_frame, text='Select Set', command=select_set, bootstyle='light-outline').pack(padx=5, pady=5)
 
-    # Button to delete a set
-    ttk.Button(select_set_frame, text='Delete Set', command=delete_selected_set, bootstyle='light').pack(padx=5, pady=5)
+    ttk.Button(select_set_frame, text='Delete Set', command=delete_selected_set, bootstyle='light-outline').pack(padx=5, pady=5)
 
-    # Create the "Learn mode" tab and its content
-
-    flashcards_frame = ttk.Frame(notebook, padding="10") # Added padding
+    flashcards_frame = ttk.Frame(notebook, padding="10") 
     notebook.add(flashcards_frame, text='Study Mode')
 
-
-    # Initialize variables for tracking card index and current cards
     card_index = 0
-    current_cards = [] # Initialize current_cards list
+    current_cards = [] 
 
-    # Frame to act as the "card" box
-    # Enhanced styling for a more card-like appearance
-    card_box_frame = ttk.Frame(flashcards_frame, relief='raised', borderwidth=3, padding="40") # Increased borderwidth and padding
-    card_box_frame.pack(pady=20, fill='both', expand=True) # Added padding and expand
+    card_box_frame = ttk.Frame(flashcards_frame, relief='raised', borderwidth=3, padding="40") 
+    card_box_frame.pack(pady=20, fill='both', expand=True) 
 
-    # Label to display the word on flashcards
-    word_label = ttk.Label(card_box_frame, text='', font=('TkHeadingFont', 24), wraplength=400, anchor='center', justify='center') # Added anchor and justify
+    word_label = ttk.Label(card_box_frame, text='', font=('TkHeadingFont', 24), wraplength=400, anchor='center', justify='center') 
     word_label.pack(padx=10, pady=10)
 
-    # Label to display the definition on flashcards
-    definition_label = ttk.Label(card_box_frame, text='', wraplength=400, anchor='center', justify='center') # Added anchor and justify
+    definition_label = ttk.Label(card_box_frame, text='', wraplength=400, anchor='center', justify='center') 
     definition_label.pack(padx=10, pady=10)
 
-    # Frame for the control buttons
     control_frame = ttk.Frame(flashcards_frame)
     control_frame.pack(pady=10)
 
-    # Button to flip the flashcard
-    ttk.Button(control_frame, text='Flip', command=flip_card, bootstyle='light').pack(side='left', padx=5)
+    ttk.Button(control_frame, text='Flip', command=flip_card, bootstyle='light-outline').pack(side='left', padx=5)
 
-    # Button to view the previous flashcard
-    ttk.Button(control_frame, text='Previous', command=prev_card, bootstyle='light').pack(side='left', padx=5)
+    ttk.Button(control_frame, text='Previous', command=prev_card, bootstyle='light-outline').pack(side='left', padx=5)
 
-    # Button to view the next flashcard
-    ttk.Button(control_frame, text='Next', command=next_card, bootstyle='light').pack(side='left', padx=5)
+    ttk.Button(control_frame, text='Next', command=next_card, bootstyle='light-outline').pack(side='left', padx=5)
 
-    # Button to shuffle the cards
-    ttk.Button(control_frame, text='Shuffle', command=shuffle_cards, bootstyle='light').pack(side='left', padx=5)
-
+    ttk.Button(control_frame, text='Shuffle', command=shuffle_cards, bootstyle='light-outline').pack(side='left', padx=5)
 
     populate_sets_combobox()
 
     
 
 
-    # Added error handling for the footer image loading
+    # Error handling for the footer image loading
     try:
-        # Open and resize the image
+        
         original_image = Image.open('D:\Downloads\CC15Flashcards\FlashMe2.png')
-        resized_image = original_image.resize((74, 75))  # Resize to fit at bottom
+        resized_image = original_image.resize((74, 75))  
         footer_image = ImageTk.PhotoImage(resized_image)
 
-        # Create and pack a label for the image
         footer_label = ttk.Label(root, image=footer_image)
-        footer_label.image = footer_image  # Keep a reference to avoid garbage collection
+        footer_label.image = footer_image  
         footer_label.pack(side='bottom', pady=10)
+        
     except FileNotFoundError:
         print("Warning: Footer image file not found at D:\Downloads\CC15Flashcards\FlashMe2.png")
     except ImportError:
         print("Warning: Pillow library not found. Install it with 'pip install Pillow' to display the footer image.")
-
 
     root.mainloop()
