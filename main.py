@@ -8,8 +8,6 @@ from tkinter import PhotoImage
 import random 
 from PIL import Image, ImageTk 
 
-
-
 def create_tables(conn):
     cursor = conn.cursor()
 
@@ -264,7 +262,8 @@ if __name__ == '__main__':
 
     # Create the main GUI window
     root = tk.Tk()
-    
+    root.withdraw()
+
     try:
         icon = PhotoImage(file='D:\Downloads\CC15Flashcards\FlashMe.png')
         root.iconphoto(True, icon)
@@ -368,5 +367,69 @@ if __name__ == '__main__':
         print("Warning: Footer image file not found at D:\Downloads\CC15Flashcards\FlashMe2.png")
     except ImportError:
         print("Warning: Pillow library not found. Install it with 'pip install Pillow' to display the footer image.")
+    
+    # --------------------------------------------------------------------------------------LOGIN PAGE--------------------------------------------------------------------------------------
+    login_window = tk.Toplevel(root)
+    login_window.title("Login")
+    login_window.geometry("300x350")
+
+    # Center the login window
+    screen_width = login_window.winfo_screenwidth()
+    screen_height = login_window.winfo_screenheight()
+    x = (screen_width - 300) // 2
+    y = (screen_height - 150) // 2
+    login_window.geometry(f'300x350+{x}+{y}')
+    login_window.resizable(False, False)
+
+    # Username widgets
+    ttk.Label(login_window, text="Username:").pack(pady=5)
+    username_entry = ttk.Entry(login_window)
+    username_entry.pack()
+
+    # Password widgets
+    ttk.Label(login_window, text="Password:").pack(pady=5)
+    password_entry = ttk.Entry(login_window, show="*")
+    password_entry.pack()
+
+    # Login button
+    def attempt_login():
+        username = username_entry.get()
+        password = password_entry.get()
+        # Simple hardcoded credentials
+        if username == "admin" and password == "password":
+            login_window.destroy()
+            root.deiconify()  # Show the main application
+        else:
+            messagebox.showerror("Login Failed", "Incorrect username or password")
+
+    ttk.Button(login_window, text="Login", command=attempt_login, bootstyle = 'light-outline').pack(pady=10)
+
+# Footer image frame
+    footer_frame = ttk.Frame(login_window)
+    footer_frame.pack(side='bottom', fill='x', pady=5)
+
+    # Add footer image
+    try:
+        # Load and resize image
+        original_image = Image.open('D:\Downloads\CC15Flashcards\FlashMe2.png')  # Update path
+        resized_image = original_image.resize((74, 75))  # Adjust size as needed
+        login_footer_image = ImageTk.PhotoImage(resized_image)
+        
+        # Create image label
+        footer_label = ttk.Label(footer_frame, image=login_footer_image)
+        footer_label.image = login_footer_image  # Keep reference
+        footer_label.pack()
+        
+    except FileNotFoundError:
+        print("Warning: Login footer image not found")
+    except ImportError:
+        print("Warning: Pillow required for images")
+
+
+    # Handle window close
+    def on_login_close():
+        root.destroy()  # Close entire application
+
+    login_window.protocol("WM_DELETE_WINDOW", on_login_close)
 
     root.mainloop()
